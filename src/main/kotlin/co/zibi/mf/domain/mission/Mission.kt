@@ -1,4 +1,4 @@
-package co.zibi.mf.domain
+package co.zibi.mf.domain.mission
 
 import jakarta.persistence.*
 import lombok.Getter
@@ -46,8 +46,7 @@ class Mission (
     val placeId: Long? = null,
 
     @Comment("미션 타입 1: 일반미션, 2: 미션팩, 3: 스텝미션")
-    @Column(name = "mission_type", nullable = false)
-    val missionType: Int,
+    val missionType: MissionType,
 
     @Comment("관람자, 스케쥴일 경우 참가자")
     @Column(name = "watcher", nullable = false)
