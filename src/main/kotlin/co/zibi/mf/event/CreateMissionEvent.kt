@@ -1,6 +1,9 @@
-package co.zibi.mf.dto
+package co.zibi.mf.event
 
-data class CreateMissionReq (
+import co.zibi.mf.dto.ScheduleInfo
+
+class CreateMissionEvent (
+
     val name: String,
 
     val categoryId: Long,
@@ -12,5 +15,6 @@ data class CreateMissionReq (
     val deadline: Long?,
 
     val scheduleInfo: ScheduleInfo
-) {
+
+): MissionEvent {
 }

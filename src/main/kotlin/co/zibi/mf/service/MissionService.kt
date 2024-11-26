@@ -1,18 +1,36 @@
 package co.zibi.mf.service
 
+import co.zibi.mf.domain.schedule.Schedule
+import co.zibi.mf.dto.MissionEventMessage
+import co.zibi.mf.event.CreateMissionEvent
 import co.zibi.mf.manager.MissionManager
-import lombok.RequiredArgsConstructor
+import co.zibi.mf.manager.ScheduleManager
+import jakarta.transaction.Transactional
 import lombok.extern.slf4j.Slf4j
 import org.springframework.stereotype.Service
 
 @Slf4j
-@RequiredArgsConstructor
 @Service
-class MissionService (
-    missionManager: MissionManager
+class MissionService(
+    missionManager: MissionManager,
+    private val scheduleManager: ScheduleManager,
 ) {
 
-    fun crateMission() {
+    @Transactional
+    fun crateMission(message: MissionEventMessage<CreateMissionEvent>) {
+        val schedules = createNewSchedules(message)
 
+        return
     }
+
+    private fun createNewSchedules(message: MissionEventMessage<CreateMissionEvent>): List<Schedule> {
+        val schedules = Schedule.forCreate(message)
+        return scheduleManager.createSchedules(schedules)
+    }
+
+    private fun createNewMission(schedules: List<Schedule>) {
+        schedules.map {
+        }
+    }
+
 }

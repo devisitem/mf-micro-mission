@@ -9,8 +9,8 @@ import java.io.Serializable
 import kotlin.jvm.Transient
 
 @Getter
-@DynamicUpdate
 @Comment("미션 메인정보")
+@Entity
 @Table(
     name = "mf_mission",
     indexes = [
@@ -75,10 +75,5 @@ class Mission (
         } else {
             emptyList()
         }
-    }
-
-    companion object {
-        @Serial
-        private const val serialVersionUID: Long = 1
     }
 }

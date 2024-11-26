@@ -4,7 +4,7 @@ data class ScheduleInfo (
 
     val scheduleMode: Int,
 
-    val selected: Array<Long>,
+    val selected: List<Long>,
 
     val startAt: Long,
 
@@ -13,11 +13,7 @@ data class ScheduleInfo (
     val endAt: Long,
 
     val repeatOption: Int,
-    val repeatValues: Array<Int>
+    val repeatValues: List<Int>
 ) {
-
-    fun getFirstRepeatValue(): Int {
-        return repeatValues[0]
-    }
 
 }
