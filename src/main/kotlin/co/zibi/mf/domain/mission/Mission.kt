@@ -7,7 +7,6 @@ import jakarta.persistence.*
 import lombok.Getter
 import org.hibernate.annotations.Comment
 import java.io.Serializable
-import kotlin.jvm.Transient
 
 @Getter
 @Comment("미션 메인정보")
@@ -64,18 +63,6 @@ class Mission (
     @Column(name = "created_at", nullable = false)
     val createdAt: Long
 ) : Serializable {
-
-    @Transient
-    var watcherList: List<Long> = emptyList()
-
-    @PostLoad
-    fun init() {
-        watcherList = if (watchers.isNotEmpty()) {
-            watchers.split(",").mapNotNull { it.toLongOrNull() }
-        } else {
-            emptyList()
-        }
-    }
 
     companion object {
         fun forCreate(event: CreateMissionEvent, schedule: Schedule, timestamp: Long): Mission {

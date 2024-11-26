@@ -4,4 +4,4 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
-rootProject.name = 'mf-content-mission'
+rootProject.name = 'mf-micro-mission'
