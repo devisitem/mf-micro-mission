@@ -1,5 +1,6 @@
 package co.zibi.mf.domain.schedule
 
+import co.zibi.mf.constant.Weeks
 import jakarta.persistence.Column
 import jakarta.persistence.Embeddable
 import org.hibernate.annotations.Comment
@@ -11,6 +12,9 @@ class RepeatValue (
     @Column(name = "repeat_value", nullable = false)
     val value: Int
 ) {
+    fun toWeeks(): List<Int> {
+        return Weeks.toIndexes(this.value)
+    }
 
 
 }

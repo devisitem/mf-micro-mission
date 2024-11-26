@@ -1,4 +1,4 @@
-package co.zibi.mf.dto
+package co.zibi.mf.vo
 
 import co.zibi.mf.event.MissionEvent
 

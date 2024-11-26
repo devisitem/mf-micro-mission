@@ -16,4 +16,10 @@ class MissionDetail (
     @OneToOne(fetch = FetchType.LAZY, cascade = [CascadeType.REMOVE])
     @JoinColumn(name = "mission_id", insertable = false, updatable = false)
     lateinit var mission: Mission
+
+    companion object {
+        fun forCreate(mission: Mission): MissionDetail {
+            return MissionDetail(mission.id)
+        }
+    }
 }

@@ -1,6 +1,5 @@
 package co.zibi.mf.constant
 
-import co.zibi.mf.domain.schedule.ScheduleMode
 import co.zibi.mf.exception.MissionException
 import co.zibi.mf.exception.error.ValidateError
 
@@ -26,6 +25,10 @@ enum class ScheduleModeType (
                 error = ValidateError.NONE_DECLARED_TYPE,
                 message = "Not found schedule mode with type by value: $value"
             )
+        }
+
+        fun isRepeat(scheduleMode: Int): Boolean {
+            return REPEAT.value == scheduleMode
         }
 
     }

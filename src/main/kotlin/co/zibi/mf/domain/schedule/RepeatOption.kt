@@ -11,6 +11,9 @@ class RepeatOption (
     @Column(name = "repeat_option", nullable = false)
     val option: Int,
 ) {
+    fun isWeekly(): Boolean {
+        return WEEKLY.option == this.option
+    }
 
     companion object {
         val NONE = RepeatOption(-1)

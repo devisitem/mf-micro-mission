@@ -2,16 +2,15 @@ package co.zibi.mf.domain.schedule
 
 import co.zibi.mf.constant.ScheduleModeType
 import co.zibi.mf.constant.Weeks
-import co.zibi.mf.dto.AuthorizedMember
-import co.zibi.mf.dto.MissionEventMessage
 import co.zibi.mf.event.CreateMissionEvent
 import co.zibi.mf.util.TemporalUtils
+import co.zibi.mf.vo.AuthorizedMember
+import co.zibi.mf.vo.MissionEventMessage
 import jakarta.persistence.*
 import lombok.Getter
 import org.hibernate.annotations.ColumnDefault
 import org.hibernate.annotations.Comment
 import java.io.Serializable
-import java.util.Collections.singletonList
 
 @Getter
 @Comment("스케쥴 정보")
@@ -64,7 +63,15 @@ class Schedule (
     val repeatOption: RepeatOption,
 
     val repeatValue: RepeatValue
+
 ): Serializable {
+    fun repeatValues(): List<Int> {
+        if (repeatOption.isWeekly()) {
+            return repeatValue.toWeeks()
+        }
+
+        return listOf(this.repeatValue.value)
+    }
 
     companion object {
         private fun of(

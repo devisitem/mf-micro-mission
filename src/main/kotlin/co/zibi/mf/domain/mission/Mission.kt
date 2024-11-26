@@ -1,10 +1,11 @@
 package co.zibi.mf.domain.mission
 
+import co.zibi.mf.constant.MissionType
+import co.zibi.mf.domain.schedule.Schedule
+import co.zibi.mf.event.CreateMissionEvent
 import jakarta.persistence.*
 import lombok.Getter
 import org.hibernate.annotations.Comment
-import org.hibernate.annotations.DynamicUpdate
-import java.io.Serial
 import java.io.Serializable
 import kotlin.jvm.Transient
 
@@ -27,7 +28,7 @@ class Mission (
 
     @Comment("공개 여부")
     @Column(name = "is_public", nullable = false)
-    val isPublic: Boolean = false,
+    val isPublic: Boolean,
 
     @Comment("미션명")
     @Column(name = "mission_name", nullable = false)
@@ -35,7 +36,7 @@ class Mission (
 
     @Comment("미션 설명")
     @Column(name = "description", length = 500)
-    val description: String? = null,
+    val description: String,
 
     @Comment("스케쥴 ID")
     @Column(name = "schedule_id", nullable = false)
@@ -45,8 +46,7 @@ class Mission (
     @Column(name = "place_id")
     val placeId: Long? = null,
 
-    @Comment("미션 타입 1: 일반미션, 2: 미션팩, 3: 스텝미션")
-    val missionType: MissionType,
+    val missionType: EmbeddableMissionType,
 
     @Comment("관람자, 스케쥴일 경우 참가자")
     @Column(name = "watcher", nullable = false)
@@ -74,6 +74,26 @@ class Mission (
             watchers.split(",").mapNotNull { it.toLongOrNull() }
         } else {
             emptyList()
+        }
+    }
+
+    companion object {
+        fun forCreate(event: CreateMissionEvent, schedule: Schedule, timestamp: Long): Mission {
+            val deadline = if (MissionType.isScheduleType(event.type))
+                event.deadline ?: 0 else 0L
+            return Mission(
+                0,
+                true,
+                event.name,
+                event.subName,
+                schedule.id,
+                0L,
+                EmbeddableMissionType(event.type),
+                "$schedule.reporter",
+                deadline,
+                timestamp,
+                timestamp
+            )
         }
     }
 }

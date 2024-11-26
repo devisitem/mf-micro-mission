@@ -1,6 +1,6 @@
 package co.zibi.mf.event
 
-import co.zibi.mf.dto.ScheduleInfo
+import co.zibi.mf.vo.ScheduleInfo
 
 class CreateMissionEvent (
 
