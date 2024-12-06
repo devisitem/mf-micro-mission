@@ -1,32 +1,32 @@
-package co.zibi.mf.vo
+package co.zibi.mf.dto
 
 import co.zibi.mf.domain.mission.Mission
 import co.zibi.mf.domain.mission.MissionState
 import co.zibi.mf.domain.schedule.Schedule
 
-class MissionDetailVo(
+class MissionDetailDto(
     val id: Long,
     val name: String,
     val description: String,
     val type: Int,
     val deadline: Long,
-    val schedule: ScheduleVo?,
-    val states: List<MissionStateVo>
+    val schedule: ScheduleDto?,
+    val states: List<MissionStateDto>
 ) {
     companion object {
         fun of(
             mission: Mission,
             states: List<MissionState>,
             schedule: Schedule?
-        ): MissionDetailVo {
-            return MissionDetailVo(
+        ): MissionDetailDto {
+            return MissionDetailDto(
                 mission.id,
                 mission.name,
                 mission.description,
                 mission.missionType.type,
                 mission.deadline,
-                schedule?.let { ScheduleVo.of(it) },
-                states.map { MissionStateVo.of(it) }
+                schedule?.let { ScheduleDto.of(it) },
+                states.map { MissionStateDto.of(it) }
             )
         }
     }
