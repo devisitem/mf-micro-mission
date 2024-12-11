@@ -5,7 +5,6 @@ import co.zibi.mf.constant.Weeks
 import co.zibi.mf.event.CreateMissionEvent
 import co.zibi.mf.util.TemporalUtils
 import co.zibi.mf.vo.AuthorizedMember
-import co.zibi.mf.vo.MissionEventMessage
 import jakarta.persistence.*
 import lombok.Getter
 import org.hibernate.annotations.ColumnDefault
@@ -99,21 +98,7 @@ class Schedule (
             )
         }
 
-        fun forCreate(message: MissionEventMessage<CreateMissionEvent>): List<Schedule> {
-            val event = message.event
-            val authorizedMember = message.authorizedMember
-
-            return when (val scheduleMode = ScheduleModeType.from(event.scheduleInfo.scheduleMode)) {
-                ScheduleModeType.PERIOD ->
-                    forPeriod(event, authorizedMember, scheduleMode)
-                ScheduleModeType.MULTIPLE, ScheduleModeType.SINGLE ->
-                    forMultiple(event, authorizedMember, scheduleMode)
-                ScheduleModeType.REPEAT ->
-                    forRepeat(event, authorizedMember, scheduleMode)
-            }
-        }
-
-        private fun forPeriod(
+        fun forPeriod(
             event: CreateMissionEvent,
             member: AuthorizedMember,
             mode: ScheduleModeType
@@ -129,7 +114,7 @@ class Schedule (
             return listOf(schedule);
         }
 
-        private fun forMultiple(
+        fun forMultiple(
             event: CreateMissionEvent,
             member: AuthorizedMember,
             mode: ScheduleModeType
@@ -146,7 +131,7 @@ class Schedule (
             }
         }
 
-        private fun forRepeat(
+        fun forRepeat(
             event: CreateMissionEvent,
             member: AuthorizedMember,
             mode: ScheduleModeType

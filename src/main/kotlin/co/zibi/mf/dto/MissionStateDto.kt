@@ -1,8 +1,8 @@
-package co.zibi.mf.vo
+package co.zibi.mf.dto
 
 import co.zibi.mf.domain.mission.MissionState
 
-class MissionStateVo(
+class MissionStateDto(
     val id: Long,
     val missionId: Long,
     val status: Int,
@@ -12,8 +12,8 @@ class MissionStateVo(
     val concreteCompleteAt: Long
 ) {
     companion object {
-        fun of(state: MissionState): MissionStateVo {
-            return MissionStateVo(
+        fun of(state: MissionState): MissionStateDto {
+            return MissionStateDto(
                 state.id,
                 state.missionId,
                 state.missionStatus.status,

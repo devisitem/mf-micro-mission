@@ -1,15 +1,13 @@
 package co.zibi.mf.constant
 
+import com.fasterxml.jackson.annotation.JsonValue
+
 enum class MissionType(
-    val type: Int
+    @JsonValue val type: Int
 ) {
     SCHEDULE(1),
     MISSION(2)
     ;
-
-    fun isSchedule(): Boolean {
-        return this == SCHEDULE
-    }
 
     companion object {
         private val CACHED = entries.associateBy { it.type }

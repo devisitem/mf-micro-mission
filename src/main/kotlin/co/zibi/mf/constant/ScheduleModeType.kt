@@ -2,9 +2,10 @@ package co.zibi.mf.constant
 
 import co.zibi.mf.exception.MissionException
 import co.zibi.mf.exception.error.ValidateError
+import com.fasterxml.jackson.annotation.JsonValue
 
 enum class ScheduleModeType (
-    val value: Int
+    @JsonValue val value: Int
 ) {
 
     SINGLE(1),
@@ -15,6 +16,10 @@ enum class ScheduleModeType (
 
     fun equalsValue(value: Int): Boolean {
         return this.value == value
+    }
+
+    fun isNotRepeat(): Boolean {
+        return REPEAT != this
     }
 
     companion object {

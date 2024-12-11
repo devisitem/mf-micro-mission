@@ -1,4 +1,6 @@
 package co.zibi.mf.event
 
-interface MissionEvent {
+import co.zibi.mf.vo.MessageEvent
+
+interface MissionEvent: MessageEvent {
 }

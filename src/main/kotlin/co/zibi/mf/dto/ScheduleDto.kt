@@ -1,8 +1,8 @@
-package co.zibi.mf.vo
+package co.zibi.mf.dto
 
 import co.zibi.mf.domain.schedule.Schedule
 
-class ScheduleVo(
+class ScheduleDto(
     val id: Long,
     val categoryId: Long,
     val mode: Int,
@@ -14,9 +14,9 @@ class ScheduleVo(
 ) {
 
     companion object {
-        fun of(schedule: Schedule): ScheduleVo {
+        fun of(schedule: Schedule): ScheduleDto {
             return schedule.let {
-                ScheduleVo(
+                ScheduleDto(
                     it.id,
                     it.categoryId,
                     it.scheduleMode.mode,
