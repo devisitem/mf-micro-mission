@@ -1,6 +1,7 @@
 package co.zibi.mf.service
 
 
+import co.zibi.mf.constant.CategoryType
 import co.zibi.mf.constant.ScheduleModeType
 import co.zibi.mf.domain.mission.Mission
 import co.zibi.mf.domain.mission.MissionDetail
@@ -25,9 +26,9 @@ class MissionService(
     @Transactional
     fun createMission(message: MissionEventMessage<CreateMissionEvent>): List<MissionDetailDto> {
         val (member, event, timestamp) = message.validate()
-        val mode = ScheduleModeType.from(event.scheduleMode)
+        val mode = event.scheduleMode
 
-        val schedules = scheduleService.createNewSchedules(mode, event, member)
+        val schedules = scheduleService.createNewSchedules(mode, CategoryType.MISSION, event, member)
         val missions = createNewMissions(schedules, event, timestamp)
         val schedulesById = schedules.associateBy { it.id }
 

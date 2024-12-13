@@ -4,8 +4,8 @@ import jakarta.persistence.Column
 import jakarta.persistence.Embeddable
 
 @Embeddable
-class ScheduleType (
-    @Column(name = "schedule_type", nullable = false)
+class ScheduleCategory (
+    @Column(name = "category", nullable = false)
     val type: Int
 ) {
     companion object {

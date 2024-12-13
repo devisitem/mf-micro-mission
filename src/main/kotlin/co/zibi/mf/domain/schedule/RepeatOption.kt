@@ -1,5 +1,6 @@
 package co.zibi.mf.domain.schedule
 
+import co.zibi.mf.constant.RepeatOptionType
 import jakarta.persistence.Column
 import jakarta.persistence.Embeddable
 import org.hibernate.annotations.Comment
@@ -11,6 +12,9 @@ class RepeatOption (
     @Column(name = "repeat_option", nullable = false)
     val option: Int,
 ) {
+    constructor(optionType: RepeatOptionType): this(optionType.value) {
+    }
+
     fun isWeekly(): Boolean {
         return WEEKLY.option == this.option
     }

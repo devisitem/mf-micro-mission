@@ -1,5 +1,6 @@
 package co.zibi.mf.domain.schedule
 
+import co.zibi.mf.constant.CategoryType
 import co.zibi.mf.constant.ScheduleModeType
 import co.zibi.mf.constant.Weeks
 import co.zibi.mf.event.CreateMissionEvent
@@ -29,8 +30,8 @@ class Schedule (
     @Column(name = "id")
     val id: Long,
 
-    @Comment("스케쥴 타입")
-    var scheduleType: ScheduleType,
+    @Comment("스케쥴 카테고리")
+    var scheduleCategory: ScheduleCategory,
 
     @Comment("카테고리 ID")
     @ColumnDefault("0")
@@ -76,7 +77,8 @@ class Schedule (
         private fun of(
             event: CreateMissionEvent,
             authorizedMember: AuthorizedMember,
-            scheduleModeType: ScheduleModeType,
+            category: CategoryType,
+            mode: ScheduleModeType,
             scheduleTime: Long,
             startAt: Long,
             endAt: Long,
@@ -85,11 +87,11 @@ class Schedule (
         ): Schedule {
             return Schedule(
                 0,
-                ScheduleType(event.type),
+                ScheduleCategory(category.value),
                 event.categoryId,
                 authorizedMember.memberId,
                 authorizedMember.familyId,
-                ScheduleMode(scheduleModeType.value),
+                ScheduleMode(mode.value),
                 scheduleTime,
                 startAt,
                 endAt,
@@ -101,10 +103,11 @@ class Schedule (
         fun forPeriod(
             event: CreateMissionEvent,
             member: AuthorizedMember,
-            mode: ScheduleModeType
+            mode: ScheduleModeType,
+            category: CategoryType
         ): List<Schedule> {
             val scheduleInfo = event.scheduleInfo
-            val schedule = of(event, member, mode,
+            val schedule = of(event, member, category, mode,
                 scheduleInfo.scheduleTime,
                 scheduleInfo.startAt,
                 scheduleInfo.endAt,
@@ -117,11 +120,12 @@ class Schedule (
         fun forMultiple(
             event: CreateMissionEvent,
             member: AuthorizedMember,
-            mode: ScheduleModeType
+            mode: ScheduleModeType,
+            category: CategoryType
         ): List<Schedule> {
             val scheduleInfo = event.scheduleInfo
             return scheduleInfo.selected.map { timestamp ->
-                of(event, member, mode,
+                of(event, member, category, mode,
                     scheduleInfo.scheduleTime,
                     timestamp,
                     timestamp + TemporalUtils.SECONDS_OF_DAY - 1,
@@ -134,14 +138,15 @@ class Schedule (
         fun forRepeat(
             event: CreateMissionEvent,
             member: AuthorizedMember,
-            mode: ScheduleModeType
+            mode: ScheduleModeType,
+            category: CategoryType
         ): List<Schedule> {
             val scheduleInfo = event.scheduleInfo
-            val repeatValue = if (RepeatOption.isWeek(scheduleInfo.repeatOption))
+            val repeatValue = if (scheduleInfo.repeatOption.isWeekly())
                 Weeks.toSelected(scheduleInfo.repeatValues)
             else scheduleInfo.repeatValues[0]
 
-            return listOf(of(event, member, mode,
+            return listOf(of(event, member, category, mode,
                 scheduleInfo.scheduleTime,
                 scheduleInfo.startAt,
                 scheduleInfo.endAt,

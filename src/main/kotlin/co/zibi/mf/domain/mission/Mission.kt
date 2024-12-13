@@ -66,16 +66,16 @@ class Mission (
 
     companion object {
         fun forCreate(event: CreateMissionEvent, schedule: Schedule, timestamp: Long): Mission {
-            val deadline = if (MissionType.isScheduleType(event.type))
+            val deadline = if (event.type.isSchedule())
                 event.deadline ?: 0 else 0L
             return Mission(
                 0,
                 true,
-                event.name,
-                event.subName,
+                event.name.value,
+                event.subName.value,
                 schedule.id,
                 0L,
-                EmbeddableMissionType(event.type),
+                EmbeddableMissionType(event.type.value),
                 "$schedule.reporter",
                 deadline,
                 timestamp,

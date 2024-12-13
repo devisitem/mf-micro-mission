@@ -1,0 +1,44 @@
+server:
+  port: 9090
+
+spring:
+  application:
+    name: mf-micro-mission
+
+datasource:
+  mission:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    pull-name: mission
+    auto-commit: false
+
+logging:
+  level:
+    co.zibi.mf: DEBUG
+  config: classpath:logback-local.xml
+
+---
+
+spring:
+  jpa:
+    open-in-view: false
+    properties:
+      hibernate.hbm2ddl.auto: create-drop
+      hibernate:
+        show_sql: true
+        format_sql: true
+  config:
+    activate:
+      on-profile: local
+
+datasource:
+  mission:
+    url: jdbc:mysql://localhost:3306/mission?cacheCallableStmts=true&serverTimezone=Asia/Seoul&useServerPrepStmts=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
+    username: root
+    password: 1111
+
+logging:
+  level:
+    org.hibernate:
+      SQL: DEBUG
+      type:
+          trace

@@ -3,14 +3,14 @@ package co.zibi.mf.constant
 import com.fasterxml.jackson.annotation.JsonValue
 
 enum class MissionType(
-    @JsonValue val type: Int
+    @JsonValue val value: Int
 ) {
     SCHEDULE(1),
     MISSION(2)
     ;
 
     companion object {
-        private val CACHED = entries.associateBy { it.type }
+        private val CACHED = entries.associateBy { it.value }
 
         fun has(type: Int): Boolean {
             return CACHED.containsKey(type)
@@ -21,7 +21,11 @@ enum class MissionType(
         }
 
         fun isScheduleType(missionType: Int): Boolean {
-            return SCHEDULE.type == missionType
+            return SCHEDULE.value == missionType
         }
+    }
+
+    fun isSchedule(): Boolean {
+        return SCHEDULE == this
     }
 }
