@@ -13,20 +13,14 @@ class RepeatOption (
     val option: Int,
 ) {
     constructor(optionType: RepeatOptionType): this(optionType.value) {
+        validate(optionType.value)
     }
 
     fun isWeekly(): Boolean {
-        return WEEKLY.option == this.option
+        return RepeatOptionType.WEEKLY.value == this.option
     }
 
-    companion object {
-        val NONE = RepeatOption(-1)
-        val WEEKLY = RepeatOption(0)
-        val MONTHLY = RepeatOption(1)
-        val YEARLY = RepeatOption(2)
-
-        fun isWeek(option: Int): Boolean {
-            return WEEKLY.option == option
-        }
+    private final fun validate(optionType: Int) {
+        require(RepeatOptionType.has(optionType)) { "반복 옵션 값이 잘못되었습니다." }
     }
 }

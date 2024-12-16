@@ -1,6 +1,7 @@
 package co.zibi.mf.domain.schedule
 
 import co.zibi.mf.constant.CategoryType
+import co.zibi.mf.constant.RepeatOptionType
 import co.zibi.mf.constant.ScheduleModeType
 import co.zibi.mf.constant.Weeks
 import co.zibi.mf.event.CreateMissionEvent
@@ -111,7 +112,7 @@ class Schedule (
                 scheduleInfo.scheduleTime,
                 scheduleInfo.startAt,
                 scheduleInfo.endAt,
-                RepeatOption.NONE,
+                RepeatOption(RepeatOptionType.NONE),
                 RepeatValue(0)
             )
             return listOf(schedule);
@@ -129,7 +130,7 @@ class Schedule (
                     scheduleInfo.scheduleTime,
                     timestamp,
                     timestamp + TemporalUtils.SECONDS_OF_DAY - 1,
-                    RepeatOption.NONE,
+                    RepeatOption(RepeatOptionType.NONE),
                     RepeatValue(0)
                 )
             }
